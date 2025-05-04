@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome to gfg</title>
+    <style>
+        body {
+            height: 2000px;
+        }
+        td {
+            border: 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>hey this is h1 tag</h1>
+    <h2>hey this is h2 tag</h2>
+    <h3>hey this is h3 tag</h3>
+    <h4>hey this is h4 tag</h4>
+    <h5>hey this is h5 tag</h5>
+    <h6>hey this is h6 tag</h6>
+
+    <div>lorem ipsum dolor sit, amet consectetur adipisicing elit. corporis, minima.</div>
+
+    <!-- lists in html -->
+    <!-- un-ordered lists -->
+    <!-- ordered lists -->
+
+    <div>
+
+        <ul type="circle">
+            <li>unorder list item 1</li>
+            <li>unorder list item 2</li>
+            <ol type="a">
+                <li>sub-item 1</li>
+                <li>sub-item 2</li>
+                <li>sub-item 3</li>
+            </ol>
+            <ul type="a">
+                <li>sub-item 1</li>
+                <li>sub-item 2</li>
+                <li>sub-item 3</li>
+            </ul>
+            <li>unorder list item 3</li>
+            <li>unorder list item 4</li>
+            <li>unorder list item 5</li>
+        </ul>
+
+        <ol type="i" reversed>
+            <li>order list item 1</li>
+            <li>order list item 2</li>
+            <ol type="a">
+                <li>sub-item 1</li>
+                <li>sub-item 2</li>
+                <li>sub-item 3</li>
+            </ol>
+            <li>order list item 3</li>
+            <li>order list item 4</li>
+            <li>order list item 5</li>
+        </ol>
+    </div>
+
+    <div>
+
+        <a target="iframeName" href="https://www.google.com/">
+            <img width="200px"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/800px-Google_2015_logo.svg.png"
+                alt="">
+        </a>
+        <div>
+            <a target="_blank" href="https://www.geeksforgeeks.org/">geeks <span style="color: green;">for</span> geeks
+                link</a>
+        </div>
+        <br>
+        <a target="_blank" href="index-2.html">Internal Hyperlink</a>
+    </div>
+
+
+    <iframe name="iframeName" src="https://iframetester.com/" height="250px" width="250px" frameborder="0"></iframe>
+
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <td>Table header 1</td>
+                <td>Table header 2</td>
+                <td>Table header 3</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2" colspan="3">table data 1</td>
+            </tr>
+            
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <form style="margin-top: 50px;">
+        
+        <label for="name">Name</label>
+        <input id="name"  type="text" placeholder="Enter name">
+        
+        <br>
+        <label for="age">Age</label>
+        <input id="age"  type="number" min="18" max="60">
+        
+        <br>
+        <label for="dob">Age</label>
+        <input id="dob"   type="date">
+        
+        <br>
+        <label for="exp">Exp</label>
+        <input id="exp"  type="range" min="0" max="5">
+        
+        <br>
+        <label for="radio-male">Male</label>
+        <input type="radio" id="radio-male" name="gender" value="male">
+        
+        <label for="radio-female">Female</label>
+        <input type="radio" id="radio-female" name="gender" value="Female">
+
+        <br>
+        <label for="pwd">Password</label>
+        <input  type="password" id="pwd" placeholder="Enter Password">
+        
+        <br>
+        <input type="checkbox" name="tnc" id="tnc" checked>
+        <label for="tnc">I Accept TnC</label>
+
+        <input type="submit" name="" id="">
+    </form>
+ <marquee behavior="" direction="">Welcome to the course</marquee>
+
+
+ <section id="sibling-selector">
+    <div id="div-selector">
+        <span>left sibling of p</span>
+        <p style="font-size: 20px;">
+            <span style="font-size: 2em;">
+            child of p, font-size 20px parent
+            
+            <span style="font-size: 3rem;">
+                span within span, my font-size is 120px
+            </span>
+        </span>
+
+    </p>
+        <span>Right siblings of p SPAN-1</span>
+        <span>Right siblings of p SPAN-2</span>
+    </div>
+</section>
+
+</body>
+
+</html>
