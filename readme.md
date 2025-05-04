@@ -10,3 +10,5 @@ git checkout <filename> - undo all changes since last stage/commit for partilar 
 git checkout . - undo all changes since last stage/commit for all lines
 git checkout <branch-name> - checkout to resp branch
 git checkout -b <branch-name> - create a new branch and then checkout
+(one time process for a new repo) git remote add origin <repo url> - add the upstream / link out local repo to cloud remote repo
+(one time process for a new branch) git push origin <branch-name> - push the local branch to remote repo 
