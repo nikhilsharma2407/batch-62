@@ -1,0 +1,73 @@
+body{
+    background-color: grey;
+}
+
+form {
+    margin-top: 50px;
+    border: 2px darkblue dashed;
+    padding: 5px;
+}
+
+input {
+    border: green 1px solid;
+}
+
+input[type="number"] {
+    border: 3px solid red;
+}
+
+.img-class {
+    width: 250px;
+}
+
+.form-label {
+    font-size: 20px;
+}
+
+
+
+#pwd:focus{
+    background-color:  aqua;
+}
+
+#pwd:hover{
+    background-color:  greenyellow;
+}
+
+.form-label {
+    font-size: 40px;
+}
+
+
+.form-input.password{
+    background-color: red;
+}
+
+input[type="password"][placeholder="Enter Password"]{
+    background-color: blue;
+}
+
+/* form input {} */
+
+/* form>input {} */
+
+#sibling-selector{
+    border: 2px solid;
+    margin-top: 50px;
+
+    div span {
+        color: blue;
+    }
+    
+    div>span {
+        color: red;
+    }
+}
+
+tr:nth-child(even){
+    background-color: red;
+}
+
+tbody tr:nth-child(odd){
+    background-color: purple;
+}
