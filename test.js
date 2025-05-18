@@ -3,6 +3,11 @@ const user =  {
     "name": "Leanne Graham",
     "username": "Bret",
     "email": "Sincere@april.biz",
+    banks:[
+      "axis",
+      "HDFC",
+      "ICICI"
+    ],
     "address": {
       "street": "Kulas Light",
       "suite": "Apt. 556",
@@ -43,7 +48,7 @@ console.log("🚀 ~ user[key]:", user[key])
 // const userCopy = {...user};
 
 const clonedeep = (obj)=>{
-
+    if (typeof obj !=="object") return obj;
     const result = Array.isArray(obj) ? []:{} ;
     Object.entries(obj).forEach(([key,value])=>{
         if (typeof value !== "object"){
@@ -60,7 +65,7 @@ const userDeepCopy = clonedeep(user);
 userCopy.address.city = "xyz";
 userDeepCopy.company.name = "GFG";
 
+userCopy.banks.push('kotak');
 console.log("🚀 ~ user:", user)
 console.log("🚀 ~ userCopy:",  userCopy)
-userCopy.banks.push('abcd');
 console.log("🚀 ~ userDeepCopy:", userDeepCopy)
