@@ -13,7 +13,7 @@ export const Child3 = ()=><h1>Child3 component</h1>
 const Parent = () => {
   return (
     <>
-      <h1>Parent Component</h1>
+      {/* <h1>Parent Component</h1>
       <section>
         <Link to="child1">child 1</Link>
         <br />
@@ -21,9 +21,9 @@ const Parent = () => {
           Child 2
         </Link>
         <br />
-        {/* absolute URL begin with / */}
+        absolute URL begin with /
         <Link to="/parent/child3">Child 3</Link>
-      </section>
+      </section> */}
 
       <Outlet/>
     </>

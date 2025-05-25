@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet, Route, Routes } from 'react-router-dom'
 import Parent from "./Parent";
+import MyNavBar from "./MyNavbar";
 function App() {
   const [name, setName] = useState("Nikhil");
   const [displayComponent, setDisplayComponent] = useState(true);
@@ -15,7 +16,7 @@ function App() {
 
   return (
     <>
-      <section id="app">
+      {/* <section id="app">
         <h1>App Component</h1>
         <section>
           <a href="test">Test Hyperlink</a>
@@ -43,13 +44,8 @@ function App() {
           <br />
           <Link to="parent/child3">Child 3</Link>
         </section>
-
-        {/* <DeclarativeRoutes /> */}
-        {/* {displayComponent &&  <ClassComponent name={name} prop1 = "abcd" user = {user} />} */}
-        {/* {displayComponent &&  <FuntionalComponent name={name} prop1 = "abcd" user = {user} />}
-
-<button onClick={()=>setDisplayComponent(!displayComponent)}>{displayComponent?'Hide':'Show' } Component</button> */}
-      </section>
+      </section> */}
+      <MyNavBar/>
       <Outlet />
     </>
   );

@@ -1,9 +1,11 @@
+import Flexbox from "./Flexbox";
 import FuntionalComponent from "./FuntionalComponent";
 import Parent, { Child1, Child2, Child3 } from "./Parent";
 import Routing from "./Routing";
 
 export const routes =  [
     { path: "test", element: <FuntionalComponent /> },
+    { path: "flex", element: <Flexbox /> },
     { 
       path: "routing/:productId", element: <Routing />},
     { 

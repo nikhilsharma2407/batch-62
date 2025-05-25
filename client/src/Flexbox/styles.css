@@ -1,0 +1,27 @@
+
+.flexbox {
+    .container {
+    height: 700px;
+    border: 1px dashed black;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    }
+
+    .flex-item{
+        border: red 1px solid;
+        height: 50px;
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+    }
+    
+    .flex-item:nth-child(even){
+        flex-grow: 2;
+        /* align-self: flex-end; */
+    }
+}
+
