@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 const MyNavBar =()=> {
   return (
-    <Navbar bg="dark" expand="md" data-bs-theme="dark">
+    <Navbar bg="dark" expand="lg" data-bs-theme="dark">
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
           React-Bootstrap
@@ -30,6 +30,10 @@ const MyNavBar =()=> {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          <Nav>
+            <Nav.Link as={Link} to="login">Login</Nav.Link>
+            <Nav.Link as={Link} to="signup">Signup</Nav.Link>
+          </Nav>
           <Form inline>
             <Row>
               <Col xs="auto">
@@ -40,7 +44,7 @@ const MyNavBar =()=> {
                 />
               </Col>
               <Col xs="auto">
-                <Button type="submit">Submit</Button>
+                <Button type="submit" variant='outline-primary'>Submit</Button>
               </Col>
             </Row>
           </Form>

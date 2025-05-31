@@ -1,7 +1,9 @@
 import Flexbox from "./Flexbox";
 import FuntionalComponent from "./FuntionalComponent";
+import Login from "./Login";
 import Parent, { Child1, Child2, Child3 } from "./Parent";
 import Routing from "./Routing";
+import Signup from "./Signup";
 
 export const routes =  [
     { path: "test", element: <FuntionalComponent /> },
@@ -17,4 +19,6 @@ export const routes =  [
       ]
   },
     { path: "abcd", element: <h1>abcd</h1> },
+    { path: "login", element: <Login /> },
+    { path: "signup", element: <Signup /> },
   ]
