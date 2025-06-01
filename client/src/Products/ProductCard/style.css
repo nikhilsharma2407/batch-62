@@ -1,0 +1,21 @@
+.product {
+    .image {
+        object-fit: contain;
+        height: 250px;
+    }
+
+    .content {
+        height: 150px;
+    }
+
+    .product-text {
+        color: #666;
+        font-size: 13px;
+    }
+
+    .desc {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
