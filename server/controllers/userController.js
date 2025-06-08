@@ -1,20 +1,18 @@
-const UserModel = require("../models/userModel");
+const UserModel = require("../models/UserModel");
 
+// const UserModel = require()
+const loginController = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await UserModel.findUser(username);
+    const { password: userPassword, ...userData } = user;
 
-const loginController = (req, res) => {
-  const { username, password } = req.body;
-  const user = UserModel.users.find((user) => user.username === username);
-
-  if (!user) {
-    res.status(404);
-    res.send({ success: false, message: "Username doesn't exist" });
-  } else {
-    if (user.password === password) {
+    if (userPassword === password) {
       res.status(200);
       res.send({
         success: true,
         message: `${username} logged in successfully`,
-        data: user,
+        data: userData,
       });
     } else {
       res.status(401);
@@ -23,21 +21,23 @@ const loginController = (req, res) => {
         message: "Incorrect Password!!!",
       });
     }
+  } catch (error) {
+    if (error.status){
+      res.status(error.status);
+    }
+    res.send({ success: false, message: error.message });
   }
 };
 
-const signupController = (req, res) => {
+const signupController = async (req, res) => {
   const userData = req.body;
-  // check if username already exists
-  if (UserModel.users.find(({ username }) => username === userData.username)) {
-    res.status(403);
-    res.send({ success: false, message: "Username already exists" });
-  } else {
-    UserModel.users.push(userData);
+  const user = await UserModel.createUser(userData);
+  if (user) {
     res.status(201);
     res.send({
       success: true,
-      message: `account for user - ${userData.username} created successfully!!!`,
+      message: `account for user - ${user.username} created successfully!!!`,
+      data: user,
     });
   }
 };

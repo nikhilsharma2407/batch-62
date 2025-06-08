@@ -1,19 +1,45 @@
-const UserModel = {
-    users:[]
-};
+const { Schema, model } = require("mongoose");
 
-// const arr = [
-//     {id:1},
-//     {id:2},
-//     {id:3},
-//     {id:4, name:"abcd", email:'abc@gmail.com'},
-//     {id:5},
-// ]
+const userSchema = new Schema({
+  username: {
+    type: String,
+    unique: true,
+    required: [true, "username is mandatory!!!"],
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: [true, "email is mandatory!!!"],
+  },
+  name: {
+    type: String,
+    required: [true, "name is mandatory!!!"],
+  },
+  password: {
+    type: String,
+    required: [true, "password is mandatory!!!"],
+  },
+  cart: {
+    type: [Object],
+  },
+});
 
+userSchema.statics.createUser = async (userdata)=>{
+    const data = await UserModel.create(userdata);
+    console.log("🚀 ~ userSchema.statics.createUser= ~ user:", data);
+    return data
+}
 
-// const user = arr.find(({id})=>id===4);
+userSchema.statics.findUser = async (username)=>{
+    const user = (await UserModel.findOne({username},{_id:0, __v:0}))?.toObject();
+    if (!user){
+        const err = new Error("username doesn't exist!!!");
+        err.status = 404;
+        throw err;
+    }
+    return user;
+}
 
-// console.log("🚀 ~ user:", user)
+const UserModel = model('users', userSchema);
 
-
-module.exports = UserModel
+module.exports = UserModel;
