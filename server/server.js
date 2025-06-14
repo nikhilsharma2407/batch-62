@@ -4,6 +4,7 @@ require('./dbConnection')
 const router = require('./routes/router');
 const userRouter = require('./routes/userRouter');
 const cartRouter = require('./routes/cartRouter');
+const errorHandler = require('./utils/errorHandler');
 const app = express();
 
 // we configure the middleware
@@ -26,10 +27,12 @@ app.use('/router',router);
 app.use('/user', userRouter);
 app.use('/cart', cartRouter);
 
+app.use(errorHandler);
+
 const PORT = 4000;
 
 
 app.listen(PORT, ()=>{
     console.clear();
     console.log(`Server running on PORT - ${PORT}`)
-})
+});
