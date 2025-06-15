@@ -1,5 +1,6 @@
 
 const express = require('express');
+const cookieParser = require('cookie-parser');
 require('./dbConnection')
 const router = require('./routes/router');
 const userRouter = require('./routes/userRouter');
@@ -11,6 +12,7 @@ const app = express();
 
 // enable our server to parse the request body
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/checkServer/:id',(req, res)=>{
     console.log("🚀 ~ app.get ~ req.path:", req.path)

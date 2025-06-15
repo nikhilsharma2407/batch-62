@@ -3,6 +3,7 @@ const {
   signupController,
   loginController,
   loginWithToken,
+  resetPassword,
 } = require("../controllers/userController");
 const userRouter = express.Router();
 
@@ -12,5 +13,10 @@ userRouter.post("/signup", signupController);
 userRouter.post("/login", loginController);
 
 userRouter.get("/login", loginWithToken);
+
+userRouter.get("/login", loginWithToken);
+
+userRouter.patch("/resetPassword", resetPassword);
+
 
 module.exports = userRouter;
