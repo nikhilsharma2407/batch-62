@@ -1,6 +1,7 @@
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
+require('dotenv').config()
 require('./dbConnection')
 const router = require('./routes/router');
 const userRouter = require('./routes/userRouter');
@@ -31,7 +32,7 @@ app.use('/cart', cartRouter);
 
 app.use(errorHandler);
 
-const PORT = 4000;
+const PORT = process.env.PORT;
 
 
 app.listen(PORT, ()=>{

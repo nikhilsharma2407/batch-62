@@ -1,47 +1,58 @@
-const { Schema, model } = require("mongoose");
+const {
+  Schema,
+  model,
+  Types: { Decimal128 },
+} = require("mongoose");
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: [true, "username is mandatory!!!"],
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+      required: [true, "username is mandatory!!!"],
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "email is mandatory!!!"],
+    },
+    name: {
+      type: String,
+      required: [true, "name is mandatory!!!"],
+    },
+    password: {
+      type: String,
+      required: [true, "password is mandatory!!!"],
+    },
+    secret: {
+      type: String,
+    },
+    cart: {
+      type: [Object],
+    },
+    totalCount: {
+      type: Number,
+    },
+    totalValue: {
+      type: Decimal128,
+      set: (value) => new Decimal128(value.toFixed(2)),
+      get: (value) => parseFloat(value),
+      default: 0,
+    },
   },
-  email: {
-    type: String,
-    unique: true,
-    required: [true, "email is mandatory!!!"],
-  },
-  name: {
-    type: String,
-    required: [true, "name is mandatory!!!"],
-  },
-  password: {
-    type: String,
-    required: [true, "password is mandatory!!!"],
-  },
-  secret: {
-    type: String,
-  },
-  cart: {
-    type: [Object],
-  },
-  totalCount: {
-    type: Number,
-  },
-  totalValue: {
-    type: Number,
-  },
-});
+  {
+    toObject: { getters: true },
+  }
+);
 
 const sanitizeUserData = (userData) => {
-  const { secret, password, __v, _id, ...data } = userData?.toObject();
+  const { id, secret, password, __v, _id, ...data } = userData?.toObject();
 
   return data;
 };
 
 userSchema.statics.createUser = async (userdata) => {
   const data = await UserModel.create(userdata);
-  console.log("🚀 ~ userSchema.statics.createUser= ~ user:", data);
   return data;
 };
 
@@ -65,10 +76,6 @@ userSchema.statics.updatePassword = async (username, password) => {
     },
     { new: true }
   );
-  console.log(
-    "🚀 ~ userSchema.statics.updatePassword= ~ updateData:",
-    updateData
-  );
   if (updateData) {
     return `Password reset succesfully for ${username}`;
   }
@@ -84,7 +91,8 @@ userSchema.statics.updatePassword = async (username, password) => {
 //   "rating": {
 //     "rate": 3.9,
 //     "count": 120
-//   }
+//   },
+//  quantity: 1
 // }
 
 // https://fakestoreapi.com/products
@@ -100,6 +108,87 @@ userSchema.statics.addToCart = async (username, product) => {
   );
 
   return sanitizeUserData(userData);
+};
+
+userSchema.statics.removeFromCart = async (username, product) => {
+  const userData = await UserModel.findOneAndUpdate(
+    { username },
+    {
+      $pull: { cart: { id: product.id } },
+      $inc: {
+        totalCount: -product.quantity,
+        totalValue: -product.quantity * product.price,
+      },
+    },
+    { new: true }
+  );
+
+  return sanitizeUserData(userData);
+};
+
+userSchema.statics.increment = async (username, product) => {
+  const userData = await UserModel.findOneAndUpdate(
+    {
+      username,
+      "cart.id": product.id,
+    },
+    {
+      $inc: {
+        totalCount: 1,
+        totalValue: product.price,
+        "cart.$.quantity": 1,
+      },
+    },
+    { new: true }
+  );
+
+  return sanitizeUserData(userData);
+};
+
+userSchema.statics.decrement = async (username, product) => {
+  if (product.quantity === 1) {
+    return UserModel.removeFromCart(username, product);
+  }
+  const userData = await UserModel.findOneAndUpdate(
+    {
+      username,
+      "cart.id": product.id,
+    },
+    {
+      $inc: {
+        totalCount: -1,
+        totalValue: -product.price,
+        "cart.$.quantity": -1,
+      },
+    },
+    { new: true }
+  );
+
+  return sanitizeUserData(userData);
+};
+
+userSchema.statics.clearCart = async (username) => {
+  const userData = await UserModel.findOneAndUpdate(
+    { username },
+    {
+      $set: {
+        cart: [],
+        totalCount: 0,
+        totalValue: 0,
+      },
+    },
+    { new: true }
+  );
+  return sanitizeUserData(userData);
+};
+
+userSchema.statics.getCartItems = async (username, product) => {
+  const cartItems = await UserModel.findOne(
+    { username },
+    { cart: 1, totalCount: 1, totalValue: 1 }
+  );
+
+  return sanitizeUserData(cartItems);
 };
 
 const UserModel = model("users", userSchema);

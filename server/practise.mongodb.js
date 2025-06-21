@@ -426,8 +426,6 @@ db.users.insert({
   ],
 });
 
-
-
 const product = {
   id: 4,
   title: "Mens Casual Slim Fit",
@@ -451,4 +449,55 @@ db.users.updateOne(
   }
 );
 
-db.users.find();
+db.users.find({ username: "nikhil", "cart.id": product.id });
+
+users.cart.reduce((totalQty, curr) => {
+  totalQty += curr.quantity;
+  return totalQty;
+}, 0);
+
+db.users.aggregate({
+  $addFields: {
+    totalQuantity: {
+      $reduce: {
+        input: "$cart",
+        initialValue: 0,
+        in: {
+          $add: ["$$value", "$$this.quantity"],
+        },
+      },
+    },
+    totalPrice: {
+      $reduce: {
+        input: "$cart",
+        initialValue: 0,
+        in: {
+          $add: [
+            "$$value",
+            {
+              $multiply: ["$$this.price", "$$this.quantity"],
+            },
+          ],
+        },
+      },
+    },
+  },
+});
+
+db.users.aggregate([
+  {
+    $match: {
+      username: "nikhil",
+    },
+  },
+  {
+    $unwind: "$cart",
+  },
+  {
+    $group: {
+      _id: null,
+      totalValue: { $sum: { $multiply: ["$cart.price", 2] } },
+      totalQuantity: { $sum: "$cart.quantity" }
+    },
+  },
+]);

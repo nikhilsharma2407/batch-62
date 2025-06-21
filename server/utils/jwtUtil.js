@@ -1,7 +1,7 @@
 const { sign, verify } = require("jsonwebtoken");
 const { errorCreator } = require("./responseHandler");
 
-const SECRET_KEY = "MY_SECRET_KEY";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const generateToken = (userdata, time = "1h") => {
   const { username } = userdata;
