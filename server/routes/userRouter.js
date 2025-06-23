@@ -14,8 +14,6 @@ userRouter.post("/login", loginController);
 
 userRouter.get("/login", loginWithToken);
 
-userRouter.get("/login", loginWithToken);
-
 userRouter.patch("/resetPassword", resetPassword);
 
 
