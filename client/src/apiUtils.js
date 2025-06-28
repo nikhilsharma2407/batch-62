@@ -1,18 +1,14 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: process.env.REACT_APP_SERVER_URL,
   withCredentials: true,
 });
-console.log(
-  "🚀 ~ process.env.REACT_APP_SERVER_URL:",
-  process.env.REACT_APP_SERVER_URL
-);
-
 export const ENDPOINTS = {
   USER: {
     SIGNUP: "user/signup",
     LOGIN: "user/login",
+    LOGOUT: "user/logout",
     RESET_PASSWORD: "/user/resetPassword",
   },
   CART: {
@@ -30,4 +26,5 @@ export const REQUEST_TYPES = {
   POST: "post",
   PUT: "put",
   PATCH: "patch",
+  DELETE: "delete",
 };

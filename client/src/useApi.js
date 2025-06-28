@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { REQUEST_TYPES, axiosInstance } from "./apiUtils";
+import { ENDPOINTS, REQUEST_TYPES, axiosInstance } from "./apiUtils";
 import { UserContext } from "./UserContextProvider";
 
 const useApi = (url, type = REQUEST_TYPES.GET) => {
@@ -20,13 +20,20 @@ const useApi = (url, type = REQUEST_TYPES.GET) => {
       setMessage(null);
       const apiData = (await axiosInstance[type](url, payload)).data;
       const { data, message, success } = apiData;
-      setSuccess(success)
+      setSuccess(success);
       setMessage(message);
+      if (url === ENDPOINTS.USER.LOGOUT) {
+        setUserData(null);
+      }
       if (data) {
         setUserData(data);
       }
     } catch (error) {
-      
+      console.log("🚀 ~ makeRequest ~ error:", error);
+      if (error.response?.data?.message) {
+        setMessage(error.response?.data?.message);
+      }
+      setSuccess(false);
     } finally {
       setIsLoading(false);
     }

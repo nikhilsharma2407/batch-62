@@ -1,4 +1,15 @@
 .signup {
     border-radius: 15px !important;
     box-shadow: 10px 10px 10px 4px grey;
+
+    .qr-code {
+        
+    }
 }
+
+.password-toggle {
+    position: absolute;
+    top: 36px;
+    right: 10px;
+}
+

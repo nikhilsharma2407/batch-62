@@ -1,10 +1,17 @@
+import { useContext } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
-const MyNavBar =()=> {
+import { UserContext } from './UserContextProvider';
+import useApi from './useApi';
+import { ENDPOINTS } from './apiUtils';
+const MyNavBar = () => {
+  const { userData } = useContext(UserContext);
+
+  const { makeRequest: logout } = useApi(ENDPOINTS.USER.LOGOUT)
   return (
     <Navbar bg="dark" expand="lg" data-bs-theme="dark">
       <Container fluid>
@@ -31,8 +38,12 @@ const MyNavBar =()=> {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link as={Link} to="login">Login</Nav.Link>
-            <Nav.Link as={Link} to="signup">Signup</Nav.Link>
+            {userData?.username ? <Nav.Link onClick={logout}>Logout</Nav.Link> :
+              <>
+                <Nav.Link as={Link} to="login">Login</Nav.Link>
+                <Nav.Link as={Link} to="signup">Signup</Nav.Link>
+              </>}
+
           </Nav>
           <Form inline>
             <Row>

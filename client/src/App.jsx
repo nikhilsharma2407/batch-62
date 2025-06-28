@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
-import { Link, Outlet, Route, Routes } from 'react-router-dom'
-import Parent from "./Parent";
+import { useContext, useEffect } from "react";
+import { Outlet } from 'react-router-dom'
 import MyNavBar from "./MyNavbar";
-import UserContextProvider from "./UserContextProvider";
+import
+ovider, { UserContext } from "./UserContextProvider";
 import useApi from "./useApi";
 import { ENDPOINTS } from "./apiUtils";
+import Loader from "./Loader";
+import MyToast from "./MyToast";
 
 function App() {
-  const { isLoading, makeRequest: loginViaCookie } = useApi(ENDPOINTS.USER.LOGIN)
+  const { makeRequest: loginViaCookie } = useApi(ENDPOINTS.USER.LOGIN);
+
+  const { isLoading, success, message } = useContext(UserContext)
 
   useEffect(() => {
     loginViaCookie()
@@ -22,6 +26,7 @@ function App() {
   // setTimeout(() => {
   //   setName("GFG");
   // }, 5 * 1000);
+
 
   return (
     <>
@@ -54,6 +59,8 @@ function App() {
           <Link to="parent/child3">Child 3</Link>
         </section>
       </section> */}
+      <MyToast message={message} success={success} />
+      <Loader isLoading={isLoading} />
       < MyNavBar />
       <Outlet />
     </>

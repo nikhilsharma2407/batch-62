@@ -42,16 +42,17 @@ const signupController = async (req, res, next) => {
     const user = await UserModel.createUser({ ...userData, secret });
     if (user) {
       res.status(201);
-      res.send(`
-      <section>
-        <h1>Two Factor Auth Setup</h1>
-        <img src=${qrCode} />
-        </section>`);
-      // res.send({
-      //   success: true,
-      //   message: `account for user - ${username} created successfully!!!`,
-      //   data: user,
-      // });
+      res.send(
+        responseCreator(
+          `account for user - ${username} created successfully!!!`,
+          qrCode
+        )
+      );
+      // res.send(`
+      // <section>
+      //   <h1>Two Factor Auth Setup</h1>
+      //   <img src=${qrCode} />
+      //   </section>`);
     }
   } catch (error) {
     next(error);
@@ -95,9 +96,15 @@ const resetPassword = async (req, res, next) => {
   }
 };
 
+const logout = async (req, res, next) => {
+  res.clearCookie("authToken");
+  res.send(responseCreator("Logged out Successfully!!!"));
+};
+
 module.exports = {
   loginController,
   signupController,
   loginWithToken,
   resetPassword,
+  logout,
 };
