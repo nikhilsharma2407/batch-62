@@ -8,13 +8,18 @@ import CartCounter from '../../CartCounter/CartCounter'
 import useApi from '../../useApi'
 import { ENDPOINTS, REQUEST_TYPES } from '../../apiUtils'
 import '../../CartCounter/style.css'
+import { useIsLoggedIn } from '../../useIsLoggedIn'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const ProductCard = ({ product }) => {
     const { makeRequest: incrementCartItemRequest, } = useApi(ENDPOINTS.CART.INCREMENT, REQUEST_TYPES.PATCH)
     const { makeRequest: decrementCartItemRequest, } = useApi(ENDPOINTS.CART.DECREMENT, REQUEST_TYPES.PATCH)
     const { makeRequest: addToCartRequest, } = useApi(ENDPOINTS.CART.ADD, REQUEST_TYPES.POST)
     const { makeRequest: removeFromCartRequest, } = useApi(ENDPOINTS.CART.REMOVE, REQUEST_TYPES.POST)
+    const isLoggedIn = useIsLoggedIn();
 
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { id,
         title,
         price,
@@ -40,8 +45,13 @@ const ProductCard = ({ product }) => {
         decrementCartItemRequest(product)
     }
 
-    const addToCart = () => {
-        addToCartRequest({ ...product, quantity });
+    const addToCart = (e) => {
+        if (!isLoggedIn) {
+            navigate('/login', { state: { redirectionFrom: pathname } });
+        }
+        else {
+            addToCartRequest({ ...product, quantity });
+        }
     }
 
     const removeFromCart = () => {

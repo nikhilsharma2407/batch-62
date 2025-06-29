@@ -1,16 +1,15 @@
-import { useContext } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link } from 'react-router-dom';
-import { UserContext } from './UserContextProvider';
+import { Link, useSearchParams } from 'react-router-dom';
 import useApi from './useApi';
 import { ENDPOINTS } from './apiUtils';
+import { useIsLoggedIn } from './useIsLoggedIn';
 const MyNavBar = () => {
-  const { userData } = useContext(UserContext);
-
+  const isUserLoggedIn = useIsLoggedIn();
+  const [, setSearchParams] = useSearchParams();
   const { makeRequest: logout } = useApi(ENDPOINTS.USER.LOGOUT)
   return (
     <Navbar bg="dark" expand="lg" data-bs-theme="dark">
@@ -38,7 +37,7 @@ const MyNavBar = () => {
             </NavDropdown>
           </Nav>
           <Nav>
-            {userData?.username ? <Nav.Link onClick={logout}>Logout</Nav.Link> :
+            {isUserLoggedIn ? <Nav.Link onClick={logout}>Logout</Nav.Link> :
               <>
                 <Nav.Link as={Link} to="login">Login</Nav.Link>
                 <Nav.Link as={Link} to="signup">Signup</Nav.Link>
@@ -52,6 +51,7 @@ const MyNavBar = () => {
                   type="text"
                   placeholder="Search"
                   className=" mr-sm-2"
+                  onChange={e => setSearchParams({ search: e.target.value })}
                 />
               </Col>
               <Col xs="auto">
