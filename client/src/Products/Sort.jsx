@@ -1,43 +1,32 @@
 import React, { useEffect } from 'react'
+import { Col, Container, Form } from 'react-bootstrap';
 
-const SORT_OPTION = [
+const SORT_OPTIONS = [
     {
-        id:1,
-        label:'Price High-Low',
-        sortKey:'price',
+        id: 'price_increasing',
+        label: 'Price Low-High',
+        sortKey: 'price',
     },
     {
-        id:2,
-        label:'Price Low-High',
-        sortKey:'price',
+        id: 'price',
+        label: 'Price High-Low',
+        sortKey: 'price',
         increasing: false,
     },
     {
-        id:3,
-        label:'Rating Low-High',
-        sortKey:'rating',
+        id: 'rating_increasing',
+        label: 'Rating Low-High',
+        sortKey: 'rating',
     },
     {
-        id:4,
-        label:'Rating Low-High',
-        sortKey:'rating',
+        id: 'rating',
+        label: 'Rating High-Low',
+        sortKey: 'rating',
         increasing: false,
     }
 ]
 
 const Sort = ({ products, setProducts }) => {
-    // {
-    //     "id": 1,
-    //     "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-    //     "price": 109.95,
-    //     "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-    //     "category": "men's clothing",
-    //     "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    //     "rating": {
-    //         "rate": 3.9,
-    //         "count": 120
-    //     }
-    // }
 
     const onSort = (sortKey, increasing = true) => {
         // p1 = 100
@@ -65,12 +54,24 @@ const Sort = ({ products, setProducts }) => {
         setProducts(sortedList)
     };
 
-    useEffect(() => {
-        // onSort('rating', false);
-    }, [])
+    const handleSort = (e) => {
+        const selectedValue = e.target.value;
+        const { sortKey, increasing } = JSON.parse(selectedValue);
+        onSort(sortKey, increasing);
+    }
 
     return (
-        <div>Sort</div>
+        <Col md={4} className='my-2'>
+            <Form.Select onChange={handleSort}>
+                <option value="" disabled selected>==Select sort option==</option>
+                {SORT_OPTIONS.map(({
+                    id,
+                    label,
+                    sortKey,
+                    increasing
+                }) => <option value={JSON.stringify({ sortKey, increasing })}> {label} </option>)}
+            </Form.Select>
+        </Col>
     )
 }
 

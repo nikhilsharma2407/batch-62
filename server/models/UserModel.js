@@ -111,13 +111,20 @@ userSchema.statics.addToCart = async (username, product) => {
 };
 
 userSchema.statics.removeFromCart = async (username, product) => {
+  const userDataObj = (
+    await UserModel.findOne({ username, "cart.id": product.id })
+  ).toObject();
+
+  const { quantity } = userDataObj.cart.find(({ id }) => id === product.id);
+
+  console.log("🚀 ~ userSchema.statics.removeFromCart= ~ quantity:", quantity)
   const userData = await UserModel.findOneAndUpdate(
     { username },
     {
       $pull: { cart: { id: product.id } },
       $inc: {
-        totalCount: -product.quantity,
-        totalValue: -product.quantity * product.price,
+        totalCount: -quantity,
+        totalValue: -quantity * product.price,
       },
     },
     { new: true }
