@@ -62,7 +62,7 @@ const ProductCard = ({ product }) => {
     return (
         <Col xl={{ span: 3 }} lg={{ span: 4 }} md={{ span: 5, offset: 0 }} sm={{ span: 10, offset: 1 }}>
             <Card className='product mb-3'>
-                <CardImg className='image' src={image} variant='top'></CardImg>
+                <CardImg loading='lazy' className='image' src={image} variant='top'></CardImg>
                 <CardBody className='content'>
                     <section className='product-text'>{title}</section>
                     <section className='product-text'>{price}</section>
