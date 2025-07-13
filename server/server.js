@@ -7,6 +7,8 @@ const router = require("./routes/router");
 const userRouter = require("./routes/userRouter");
 const cartRouter = require("./routes/cartRouter");
 const errorHandler = require("./utils/errorHandler");
+const adminRouter = require("./routes/adminRouter");
+const merchantRouter = require("./routes/merchantRouter");
 const app = express();
 
 // we configure the middleware
@@ -35,6 +37,8 @@ app.get("/checkServer/:id", (req, res) => {
 app.use("/router", router);
 app.use("/user", userRouter);
 app.use("/cart", cartRouter);
+app.use("/admin", adminRouter);
+app.use("/merchant", merchantRouter);
 
 app.use(errorHandler);
 
