@@ -59,9 +59,13 @@ const ProductCard = ({ product }) => {
         removeFromCartRequest({ ...product, quantity });
     }
 
+    const onEdit = () => {
+        navigate('/edit', { state: { product } });
+    }
+
     return (
         <Col xl={{ span: 3 }} lg={{ span: 4 }} md={{ span: 5, offset: 0 }} sm={{ span: 10, offset: 1 }}>
-            <Card className='product mb-3'>
+            <Card className='product mb-3' onClick={onEdit}>
                 <CardImg loading='lazy' className='image' src={image} variant='top'></CardImg>
                 <CardBody className='content'>
                     <section className='product-text'>{title}</section>
