@@ -106,7 +106,8 @@ userSchema.statics.addToCart = async (username, product) => {
     },
     { new: true }
   );
-
+  console.log("🚀 ~ userSchema.statics.addToCart= ~ userData:", userData)
+  console.log("🚀 ~ userSchema.statics.addToCart= ~ sanitizeUserData(userData):", sanitizeUserData(userData))
   return sanitizeUserData(userData);
 };
 

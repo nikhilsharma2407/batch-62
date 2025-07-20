@@ -51,6 +51,7 @@ const merchantSchema = new Schema(
     promotionalBanner: String,
     onboarding: {
       status: { type: String, default: "Pending" },
+      lastUpdateDate: Date,
       requestDate: Date,
       statusUpdatedBy: String,
     },
@@ -96,6 +97,35 @@ merchantSchema.statics.updatePassword = async (username, password) => {
   if (updateData) {
     return `Password reset succesfully for ${username}`;
   }
+};
+
+merchantSchema.statics.getAllMerchantsInfo = async () => {
+  const merchants = await MerchantModel.find({}, { products: 0 });
+
+  return merchants.map(sanitizeUserData);
+};
+
+merchantSchema.statics.updateOnboardingStatus = async (
+  merchantUsername,
+  action,
+  lastUpdateDate,
+  adminUsername
+) => {
+  const data = await MerchantModel.findOneAndUpdate(
+    { username: merchantUsername },
+    {
+      $set: {
+        onboarding: {
+          status: action,
+          lastUpdateDate,
+          statusUpdatedBy: adminUsername,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  return data;
 };
 
 const MerchantModel = model("merchants", merchantSchema);
