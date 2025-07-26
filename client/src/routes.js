@@ -5,11 +5,13 @@ import Parent, { Child1, Child2, Child3 } from "./Parent";
 import Products from "./Products";
 import EditableProductCard from "./Products/EditableProductCard";
 import FormikWrapper from "./Products/EditableProductCard/FormikWrapper";
+import PaginatedProducts from "./Products/PaginatedProducts";
 import Routing from "./Routing";
 import Signup from "./Signup";
 
 export const routes = [
   { path: "", element: <Products /> },
+  { path: "products", element: <PaginatedProducts /> },
   { path: "edit", element: <FormikWrapper /> },
   { path: "test", element: <FuntionalComponent /> },
   { path: "flex", element: <Flexbox /> },

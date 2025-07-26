@@ -128,6 +128,27 @@ merchantSchema.statics.updateOnboardingStatus = async (
   return data;
 };
 
+merchantSchema.statics.getAllProducts = async (page, limit) => {
+  const skip = (page - 1) * limit;
+  const totalCount = await MerchantModel.aggregate([
+    { $unwind: "$products" },
+    { $count: "totalCount" },
+  ]);
+  console.log("🚀 ~ totalCount:", totalCount)
+  const products = await MerchantModel.aggregate([
+    { $unwind: "$products" },
+    {
+      $replaceRoot: {
+        newRoot: "$products",
+      },
+    },
+    { $skip: skip },
+    { $limit: limit },
+  ]);
+
+  return { totalCount, products };
+};
+
 const MerchantModel = model("merchants", merchantSchema);
 
 module.exports = MerchantModel;

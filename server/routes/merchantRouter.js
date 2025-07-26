@@ -5,6 +5,7 @@ const {
   loginWithToken,
   resetPassword,
   logout,
+  getProducts,
 } = require("../controllers/merchantController");
 const merchantRouter = express.Router();
 
@@ -16,6 +17,8 @@ merchantRouter.post("/login", loginController);
 merchantRouter.get("/login", loginWithToken);
 
 merchantRouter.get("/logout", logout);
+
+merchantRouter.get("/products", getProducts );
 
 merchantRouter.patch("/resetPassword", resetPassword);
 

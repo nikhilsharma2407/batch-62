@@ -101,10 +101,22 @@ const logout = async (req, res, next) => {
   res.send(responseCreator("Logged out Successfully!!!"));
 };
 
+const getProducts = async (req, res, next) => {
+  try {
+    const { limit = 10, page = 1 } = req.query;
+    const data = await MerchantModel.getAllProducts(parseInt(page), +limit);
+    console.log("🚀 ~ getProducts ~ data:", data);
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   loginController,
   signupController,
   loginWithToken,
   resetPassword,
   logout,
+  getProducts,
 };

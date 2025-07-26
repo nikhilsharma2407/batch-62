@@ -6,26 +6,26 @@ import { useSearchParams } from 'react-router-dom';
 import Sort from './Sort';
 import ProductFilter from './ProductFilter';
 
-const Products = () => {
-    const url = 'https://fakestoreapi.com/products';
-    const [products, setProducts] = useState([]);
+const Products = ({ products, setProducts }) => {
+    // const url = 'https://fakestoreapi.com/products';
+
     const [productCategories, setProductCategories] = useState([]);
 
     const [activeFilters, setActiveFilters] = useState([]);
     const [searchParams] = useSearchParams();
 
     // update the loading state here;
-    useEffect(() => {
-        // IIFE
-        (async () => {
-            const data = (await axios.get(url)).data;
-            setProducts(data);
-            const uniqueFilters = new Set(data.map(({ category }) => category.toLowerCase()));
-            console.log("🚀 ~ uniqueFilters:", uniqueFilters);
-            console.log("🚀 ~ Setting ProductCategories:");
-            setProductCategories([...uniqueFilters])
-        })();
-    }, []);
+    // useEffect(() => {
+    //     // IIFE
+    //     (async () => {
+    //         const data = (await axios.get(url)).data;
+    //         setProducts(data);
+    //         const uniqueFilters = new Set(data.map(({ category }) => category.toLowerCase()));
+    //         console.log("🚀 ~ uniqueFilters:", uniqueFilters);
+    //         console.log("🚀 ~ Setting ProductCategories:");
+    //         setProductCategories([...uniqueFilters])
+    //     })();
+    // }, []);
 
     const search = ({
         title,

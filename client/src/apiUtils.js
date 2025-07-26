@@ -19,6 +19,9 @@ export const ENDPOINTS = {
     CLEAR_CART: "cart/clearCart",
     GET_CART_ITEMS: "cart/getCartItems",
   },
+  MERCHANT:{
+    GET_PRODUCTS: 'merchant/products'
+  }
 };
 
 export const REQUEST_TYPES = {
