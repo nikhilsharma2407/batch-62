@@ -5,7 +5,6 @@ import { ENDPOINTS, axiosInstance } from '../apiUtils';
 import Loader from '../Loader';
 
 const PaginatedProducts = () => {
-    const controller = new AbortController();
     const [page, setCurrentPage] = useState(1);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false)
@@ -16,16 +15,13 @@ const PaginatedProducts = () => {
 
 
     useEffect(() => {
+        const abortController = new AbortController();
         (async () => {
             try {
-                if (loading){
-                    console.log('loading','cancel api')
-                    controller.abort('cancel api');
-                }
                 setLoading(true);
                 const { data } = await axiosInstance.get(ENDPOINTS.MERCHANT.GET_PRODUCTS, {
                     params: { limit, page },
-                    signal: controller.signal
+                    signal: abortController.signal
                 });
                 console.log("🚀 ~ PaginatedProducts ~ data:", data);
 
@@ -36,16 +32,21 @@ const PaginatedProducts = () => {
             } finally {
                 setLoading(false);
             }
-        })()
+        })();
+
+        return ()=>{
+            console.log(`cleanup for previous state  page - ${page}`);
+            abortController.abort('Api Cancelled!!!');
+        }
     }, [page])
 
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {
         const newPage = event.selected + 1;
         console.log(
-            `User requested page number ${event.selected}`
+            `User requested page number ${event.selected + 1}`
         );
-        setCurrentPage(newPage)
+        setCurrentPage(newPage);
     };
 
     return (

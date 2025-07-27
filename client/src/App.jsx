@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import MyNavBar from "./MyNavbar";
 import
 ovider, { UserContext } from "./UserContextProvider";
@@ -10,12 +10,14 @@ import MyToast from "./MyToast";
 
 function App() {
   const { makeRequest: loginViaCookie } = useApi(ENDPOINTS.USER.LOGIN);
-
-  const { isLoading, success, message } = useContext(UserContext)
+  const { pathname } = useLocation();
+  const { isLoading, success, message, userData } = useContext(UserContext)
 
   useEffect(() => {
-    loginViaCookie()
-  }, [])
+    if (pathname === '/' && !userData){
+      loginViaCookie()
+    }
+  }, [pathname])
   // const [name, setName] = useState("Nikhil");
   // const [displayComponent, setDisplayComponent] = useState(true);
   // const user = {

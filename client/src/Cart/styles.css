@@ -1,0 +1,22 @@
+.cart-item {
+    img {
+        height: 180px;
+        object-fit: contain;
+    }
+
+
+    .cart-qty {
+        cursor: pointer;
+        border: 2px solid #ffce12;
+        display: inline-flex;
+        align-items: center;
+        width: 100px;
+        justify-content: space-around;
+        font-weight: 600;
+        padding: 2px;
+    }
+}
+
+.rounded-border {
+    border-radius: 50rem !important;
+}

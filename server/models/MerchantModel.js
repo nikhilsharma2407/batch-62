@@ -76,7 +76,7 @@ merchantSchema.statics.createMerchant = async (userdata) => {
 
 merchantSchema.statics.findUser = async (username) => {
   const user = (
-    await MerchantModel.findOne({ username }, { _id: 0, __v: 0 })
+    await MerchantModel.findOne({ username }, { _id: 0, __v: 0, products: 0 })
   )?.toObject();
   if (!user) {
     const err = new Error("username doesn't exist!!!");
@@ -122,7 +122,9 @@ merchantSchema.statics.updateOnboardingStatus = async (
         },
       },
     },
-    { new: true }
+    { 
+      new: true, 
+      projection: { products: 0 } }
   );
 
   return data;
@@ -134,7 +136,7 @@ merchantSchema.statics.getAllProducts = async (page, limit) => {
     { $unwind: "$products" },
     { $count: "totalCount" },
   ]);
-  console.log("🚀 ~ totalCount:", totalCount)
+  console.log("🚀 ~ totalCount:", totalCount);
   const products = await MerchantModel.aggregate([
     { $unwind: "$products" },
     {

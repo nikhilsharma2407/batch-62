@@ -94,7 +94,11 @@ const ProductCard = ({ product }) => {
                         </>
 
                         :
-                        <Button disabled={isLoading} variant='outline-primary' onClick={addToCart}><BagHeartFill /> Add to Cart</Button>}
+                        <Button disabled={isLoading} variant='outline-primary' onClick={addToCart}>
+                            <section className='d-flex align-items-center'>
+                                <BagHeartFill  className='me-2'/> Add to Cart
+                            </section>
+                        </Button>}
 
                 </CardFooter>
             </Card>

@@ -1,3 +1,5 @@
-DB_URL = mongodb://localhost:27017/test
+DB_URL = DB_URL
 SECRET_KEY = $2b$10$HWCWo27NKOJeFyxJ17d1O.
 PORT = 4000
+EMAIL_USER_NAME = gmailusername
+EMAIL_PASSWORD = APP_PASSWORD
