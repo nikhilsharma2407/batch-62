@@ -1,6 +1,7 @@
 const fn = async () => {
-  return 'abcd';
+  return 'xyz';
 };
 
 const val = fn();
+
 console.log(val)
