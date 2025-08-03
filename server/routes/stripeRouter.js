@@ -1,0 +1,79 @@
+const express = require("express");
+const Stripe = require("stripe");
+const authController = require("../controllers/authController");
+const UserModel = require("../models/UserModel");
+const router = express.Router();
+require("dotenv").config();
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+router.post("/create-checkout-session", authController, async (req, res) => {
+  const { cart } = res.locals.user;
+
+  try {
+    const lineItems = cart.map((product) => ({
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: product.title,
+          images: [product.image],
+        },
+        unit_amount: Math.round(product.price * product.quantity * 100), // price in paise
+      },
+      quantity: product.quantity,
+    }));
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: lineItems,
+      mode: "payment",
+      success_url: "http://localhost:3000/success",
+      cancel_url: "http://localhost:3000/cancel",
+    });
+
+    res.json({ url: session.url });
+  } catch (err) {
+    console.error("Stripe Checkout Error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/checkout-session", authController, async (req, res) => {
+  const { session_id } = req.query;
+  const user = res.locals.user;
+
+  if (!user?.cart || user.cart.length === 0) {
+    return res.status(400).json({ error: "Cart is empty or missing" });
+  }
+
+  try {
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+    const dbUser = await UserModel.findUser(user.username);
+    const order = {
+      stripeSessionId: session.id,
+      username:user.username,
+      amountTotal: session.amount_total / 100,
+      currency: session.currency,
+      paymentStatus: session.payment_status,
+      products: user.cart.map((item) => ({
+        id: item.id,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity,
+        image: item.image,
+      })),
+    };
+
+    // Optionally clear cart
+    dbUser.cart = [];
+    dbUser.orders.push(order)
+    await dbUser.save();
+    
+    res.status(200).json({ message: "Order saved successfully" });
+  } catch (error) {
+    console.error("❌ Stripe fetch error:", error);
+    res.status(500).json({ error: "Failed to fetch Stripe session" });
+  }
+});
+
+module.exports = router;

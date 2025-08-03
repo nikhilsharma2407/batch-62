@@ -10,6 +10,7 @@ const cartRouter = require("./routes/cartRouter");
 const errorHandler = require("./utils/errorHandler");
 const adminRouter = require("./routes/adminRouter");
 const merchantRouter = require("./routes/merchantRouter");
+const stripeRouter = require("./routes/stripeRouter");
 const app = express();
 
 // we configure the middleware
@@ -40,6 +41,8 @@ app.use("/user", userRouter);
 app.use("/cart", cartRouter);
 app.use("/admin", adminRouter);
 app.use("/merchant", merchantRouter);
+
+app.use("/stripe", stripeRouter);
 
 app.use("/", express.static(path.join(__dirname, "build")));
 

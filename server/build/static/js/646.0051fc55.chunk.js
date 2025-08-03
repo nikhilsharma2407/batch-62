@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[646],{6646:(e,n,h)=>{h.r(n),h.d(n,{Child1:()=>t,Child2:()=>c,Child3:()=>i,Parent:()=>d});h(5043);var l=h(9002),s=h(579);const t=()=>{const{state:e}=(0,l.zy)();return console.log("\ud83d\ude80 ~ Child1 ~ state:",e),(0,s.jsx)("h1",{children:"Child1 component"})},c=()=>(0,s.jsx)("h1",{children:"Child2 component"}),i=()=>(0,s.jsx)("h1",{children:"Child3 component"}),d=()=>(0,s.jsx)(s.Fragment,{children:(0,s.jsx)(l.sv,{})})}}]);
+//# sourceMappingURL=646.0051fc55.chunk.js.map

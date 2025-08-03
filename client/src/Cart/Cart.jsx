@@ -1,7 +1,7 @@
 import React from 'react'
-import { Badge, Button, ButtonGroup, Card, CardBody, Col, Container, FormCheck, Image, ProgressBar, Row } from 'react-bootstrap'
+import { Button, Card, CardBody, Col, Container, FormCheck, Image, ProgressBar, Row } from 'react-bootstrap'
+import { axiosInstance } from '../apiUtils';
 import './styles.css';
-import { Plus, Trash } from 'react-bootstrap-icons';
 
 const Cart = () => {
     const product = {
@@ -29,6 +29,22 @@ const Cart = () => {
 
     const totalCount = 10;
     const totalPrice = 58000;
+
+    const handleCheckout = async () => {
+        try {
+            const { data } = await axiosInstance.post('/stripe/create-checkout-session');
+
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                alert('Failed to create checkout session.');
+            }
+        } catch (error) {
+            console.error('Stripe checkout error:', error);
+            alert('Something went wrong during checkout.');
+        }
+    };
+
     return (
         <Container fluid>
             <Row>
@@ -97,7 +113,7 @@ const Cart = () => {
                                 )}
                             </h5>
                             <FormCheck label='This order contains a gift' className='mt-3' />
-                            <Button variant='warning' className='w-100 rounded-border'>
+                            <Button variant='warning' className='w-100 rounded-border' onClick={handleCheckout}>
                                 Proceed to Buy
                             </Button>
                         </CardBody>

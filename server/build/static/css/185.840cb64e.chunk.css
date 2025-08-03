@@ -1,0 +1,2 @@
+.flexbox{.container{border:1px dashed #000;display:flex;flex-direction:row;flex-wrap:wrap;height:700px;padding:15px}.flex-item{align-items:center;border:1px solid red;display:flex;flex-grow:1;height:50px;justify-content:center;width:50px}.flex-item:nth-child(2n){flex-grow:2}}
+/*# sourceMappingURL=185.840cb64e.chunk.css.map*/
