@@ -36,16 +36,19 @@ const ProductCard = ({ product }) => {
     const productFromCart = cart?.find(product => product.id === id);
     const { quantity } = productFromCart || {}
 
-    const increaseProductInCart = () => {
+    const increaseProductInCart = (e) => {
+        e.stopPropagation();
         if (isLoading) return;
         incrementCartItemRequest(product);
     }
-    const decreaseProductInCart = () => {
+    const decreaseProductInCart = (e) => {
+        e.stopPropagation();
         if (isLoading) return;
         decrementCartItemRequest(product)
     }
 
     const addToCart = (e) => {
+        e.stopPropagation();
         if (!isLoggedIn) {
             navigate('/login', { state: { redirectionFrom: pathname } });
         }
@@ -54,7 +57,8 @@ const ProductCard = ({ product }) => {
         }
     }
 
-    const removeFromCart = () => {
+    const removeFromCart = (e) => {
+        e.stopPropagation();
         if (isLoading) return;
         removeFromCartRequest({ ...product, quantity });
     }

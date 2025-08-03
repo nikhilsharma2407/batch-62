@@ -21,6 +21,9 @@ export const ENDPOINTS = {
   },
   MERCHANT:{
     GET_PRODUCTS: 'merchant/products'
+  },
+  STRIPE:{
+    GET_CHECKOUT_SESSION: 'stripe/checkout-session'
   }
 };
 

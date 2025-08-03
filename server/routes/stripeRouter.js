@@ -18,7 +18,7 @@ router.post("/create-checkout-session", authController, async (req, res) => {
           name: product.title,
           images: [product.image],
         },
-        unit_amount: Math.round(product.price * product.quantity * 100), // price in paise
+        unit_amount: Math.round(product.price * 100), // price in paise
       },
       quantity: product.quantity,
     }));
@@ -27,11 +27,11 @@ router.post("/create-checkout-session", authController, async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: "https://gfg-app.onrender.com/success",
+      cancel_url: "https://gfg-app.onrender.com/cancel",
     });
-
-    res.json({ url: session.url });
+    res.cookie("session_id", session.id, { maxAge: 3600_000, httpOnly: true });
+    res.json(session);
   } catch (err) {
     console.error("Stripe Checkout Error:", err);
     res.status(500).json({ error: err.message });
@@ -39,7 +39,7 @@ router.post("/create-checkout-session", authController, async (req, res) => {
 });
 
 router.get("/checkout-session", authController, async (req, res) => {
-  const { session_id } = req.query;
+  const { session_id } = req.cookies;
   const user = res.locals.user;
 
   if (!user?.cart || user.cart.length === 0) {
@@ -48,10 +48,10 @@ router.get("/checkout-session", authController, async (req, res) => {
 
   try {
     const session = await stripe.checkout.sessions.retrieve(session_id);
-    const dbUser = await UserModel.findUser(user.username);
+    const dbUser = await UserModel.findOne({ username: user.username });
     const order = {
       stripeSessionId: session.id,
-      username:user.username,
+      username: user.username,
       amountTotal: session.amount_total / 100,
       currency: session.currency,
       paymentStatus: session.payment_status,
@@ -66,9 +66,14 @@ router.get("/checkout-session", authController, async (req, res) => {
 
     // Optionally clear cart
     dbUser.cart = [];
-    dbUser.orders.push(order)
+    dbUser.totalValue = 0;
+    dbUser.totalCount = 0;
+    if (!dbUser.orders) {
+      dbUser.orders = [];
+    }
+    dbUser.orders.push(order);
     await dbUser.save();
-    
+
     res.status(200).json({ message: "Order saved successfully" });
   } catch (error) {
     console.error("❌ Stripe fetch error:", error);

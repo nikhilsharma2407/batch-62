@@ -35,10 +35,13 @@ const userSchema = new Schema(
     },
     totalValue: {
       type: Decimal128,
-      set: (value) => new Decimal128(value.toFixed(2)),
+      set: (value) => new Decimal128(parseFloat(value).toFixed(2)),
       get: (value) => parseFloat(value),
       default: 0,
     },
+    orders:{
+      type: [Object]
+    }
   },
   {
     toObject: { getters: true },

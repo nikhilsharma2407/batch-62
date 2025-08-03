@@ -1,9 +1,11 @@
 import React from 'react'
 import { Button, Card, CardBody, Col, Container, FormCheck, Image, ProgressBar, Row } from 'react-bootstrap'
-import { axiosInstance } from '../apiUtils';
+import { ENDPOINTS, REQUEST_TYPES, axiosInstance } from '../apiUtils';
 import './styles.css';
+import useApi from '../useApi';
 
 const Cart = () => {
+    const { makeRequest: clearCartApi } = useApi(ENDPOINTS.CART.CLEAR_CART, REQUEST_TYPES.PUT)
     const product = {
         "id": 1,
         "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -44,6 +46,10 @@ const Cart = () => {
             alert('Something went wrong during checkout.');
         }
     };
+
+    const clearCart = async () => {
+        await clearCartApi();
+    }
 
     return (
         <Container fluid>
@@ -115,6 +121,9 @@ const Cart = () => {
                             <FormCheck label='This order contains a gift' className='mt-3' />
                             <Button variant='warning' className='w-100 rounded-border' onClick={handleCheckout}>
                                 Proceed to Buy
+                            </Button>
+                            <Button variant='danger' className='w-100 mt-3 rounded-border' onClick={clearCart}>
+                                Clear Cart
                             </Button>
                         </CardBody>
                     </Card>

@@ -1,6 +1,7 @@
 import { lazy } from "react";
+import Success from "./Payment/Success";
 
-const { Parent, Child1, Child2, Child3 } = lazy(()=>import("./Parent")) ;
+const { Parent, Child1, Child2, Child3 } = lazy(() => import("./Parent"));
 const Cart = lazy(() => import("./Cart/Cart"));
 const Counter = lazy(() => import("./Counter"));
 const Flexbox = lazy(() => import("./Flexbox"));
@@ -26,6 +27,7 @@ export const routes = [
   { path: "test", element: <FuntionalComponent /> },
   { path: "flex", element: <Flexbox /> },
   { path: "cart", element: <Cart /> },
+  { path: "success", element: <Success /> },
   { path: "reducer", element: <Counter /> },
   {
     path: "routing/:productId",
