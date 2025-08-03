@@ -7,6 +7,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { routes } from "./routes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserContextProvider from "./UserContextProvider";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import logger from "redux-logger";
+import { thunk } from "redux-thunk";
+import rootReducer from "./rootReducer";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +22,15 @@ const router = createBrowserRouter([
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const store = createStore(rootReducer, applyMiddleware(logger, thunk))
+
 root.render(
   <UserContextProvider>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
+    <Provider store={store}>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+    </Provider>
   </UserContextProvider>
 );
 

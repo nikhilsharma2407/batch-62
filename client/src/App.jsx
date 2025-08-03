@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { Suspense, useContext, useEffect } from "react";
 import { Outlet, useLocation } from 'react-router-dom'
 import MyNavBar from "./MyNavbar";
 import
@@ -14,7 +14,7 @@ function App() {
   const { isLoading, success, message, userData } = useContext(UserContext)
 
   useEffect(() => {
-    if (pathname === '/' && !userData){
+    if (pathname === '/' && !userData) {
       loginViaCookie()
     }
   }, [pathname])
@@ -64,7 +64,9 @@ function App() {
       <MyToast message={message} success={success} />
       <Loader isLoading={isLoading} />
       < MyNavBar />
-      <Outlet />
+      <Suspense fallback={<h1>Loading</h1>} >
+        <Outlet />
+      </Suspense>
     </>
   );
 }

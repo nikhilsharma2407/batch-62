@@ -10,7 +10,7 @@ return <h1>Child1 component</h1>
 export const Child2 = ()=><h1>Child2 component</h1>
 export const Child3 = ()=><h1>Child3 component</h1>
 
-const Parent = () => {
+export const Parent = () => {
   return (
     <>
       {/* <h1>Parent Component</h1>
@@ -30,4 +30,3 @@ const Parent = () => {
   );
 }
 
-export default Parent

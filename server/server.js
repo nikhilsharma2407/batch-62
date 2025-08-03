@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const cors = require("cors");
+const path = require("path");
 require("./dbConnection");
 const router = require("./routes/router");
 const userRouter = require("./routes/userRouter");
@@ -39,6 +40,12 @@ app.use("/user", userRouter);
 app.use("/cart", cartRouter);
 app.use("/admin", adminRouter);
 app.use("/merchant", merchantRouter);
+
+app.use("/", express.static(path.join(__dirname, "build")));
+
+app.get("/*splat", (req, res) => {
+  res.sendFile(path.join(__dirname, "build/index.html"));
+});
 
 app.use(errorHandler);
 

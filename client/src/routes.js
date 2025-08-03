@@ -1,15 +1,22 @@
-import Cart from "./Cart/Cart";
-import Flexbox from "./Flexbox";
-import FuntionalComponent from "./FuntionalComponent";
-import Login from "./Login";
-import MerchantOnboardingTable from "./MerchantOnboardingTable";
-import Parent, { Child1, Child2, Child3 } from "./Parent";
-import Products from "./Products";
-import EditableProductCard from "./Products/EditableProductCard";
-import FormikWrapper from "./Products/EditableProductCard/FormikWrapper";
-import PaginatedProducts from "./Products/PaginatedProducts";
-import Routing from "./Routing";
-import Signup from "./Signup";
+import { lazy } from "react";
+
+const { Parent, Child1, Child2, Child3 } = lazy(()=>import("./Parent")) ;
+const Cart = lazy(() => import("./Cart/Cart"));
+const Counter = lazy(() => import("./Counter"));
+const Flexbox = lazy(() => import("./Flexbox"));
+const Products = lazy(() => import("./Products"));
+const EditableProductCard = lazy(() =>
+  import("./Products/EditableProductCard")
+);
+const FormikWrapper = lazy(() =>
+  import("./Products/EditableProductCard/FormikWrapper")
+);
+const FuntionalComponent = lazy(() => import("./FuntionalComponent"));
+const Login = lazy(() => import("./Login"));
+const MerchantOnboardingTable = lazy(() => import("./MerchantOnboardingTable"));
+const PaginatedProducts = lazy(() => import("./Products/PaginatedProducts"));
+const Routing = lazy(() => import("./Routing"));
+const Signup = lazy(() => import("./Signup"));
 
 export const routes = [
   { path: "", element: <PaginatedProducts /> },
@@ -19,6 +26,7 @@ export const routes = [
   { path: "test", element: <FuntionalComponent /> },
   { path: "flex", element: <Flexbox /> },
   { path: "cart", element: <Cart /> },
+  { path: "reducer", element: <Counter /> },
   {
     path: "routing/:productId",
     element: <Routing />,

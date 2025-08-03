@@ -8,7 +8,7 @@ const PaginatedProducts = () => {
     const [page, setCurrentPage] = useState(1);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false)
-    const limit = 5;
+    const limit = 50;
     const totalItems = 200;
 
     const pageCount = Math.ceil(totalItems / limit);
