@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
     const { cart } = userData || {};
 
     const productFromCart = cart?.find(product => product.id === id);
-    const { quantity } = productFromCart || {}
+    const { quantity } = product || productFromCart || {}
 
     const increaseProductInCart = (e) => {
         e.stopPropagation();

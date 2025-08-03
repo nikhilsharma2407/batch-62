@@ -55,13 +55,7 @@ router.get("/checkout-session", authController, async (req, res) => {
       amountTotal: session.amount_total / 100,
       currency: session.currency,
       paymentStatus: session.payment_status,
-      products: user.cart.map((item) => ({
-        id: item.id,
-        title: item.title,
-        price: item.price,
-        quantity: item.quantity,
-        image: item.image,
-      })),
+      products: user.cart,
     };
 
     // Optionally clear cart
@@ -72,9 +66,10 @@ router.get("/checkout-session", authController, async (req, res) => {
       dbUser.orders = [];
     }
     dbUser.orders.push(order);
-    await dbUser.save();
+    // await dbUser.save();
+    // const { id, secret, password, __v, _id, ...data } = dbUser?.toObject();
 
-    res.status(200).json({ message: "Order saved successfully" });
+    res.status(200).json({ message: "Order saved successfully", data: order });
   } catch (error) {
     console.error("❌ Stripe fetch error:", error);
     res.status(500).json({ error: "Failed to fetch Stripe session" });
