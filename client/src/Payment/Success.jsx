@@ -3,7 +3,8 @@ import { ENDPOINTS, axiosInstance } from '../apiUtils'
 import ProductCard from '../Products/ProductCard'
 
 const Success = () => {
-    const [data, setData] = useState(null)
+    const [data, setData] = useState(null);
+    alert('123');
     useEffect(() => {
         (async () => {
             const { data } = (await axiosInstance.get(ENDPOINTS.STRIPE.GET_CHECKOUT_SESSION)).data;
