@@ -12,7 +12,7 @@ const Success = () => {
     }, [])
     return (
         <>
-            <div>Payment Successful</div>
+            <h1>Payment Successful page</h1>
             <div>total - {data?.amountTotal}</div>
             <div>paymentStatus - {data?.paymentStatus}</div>
             {data?.products?.map((product) => <ProductCard product={product} key={product.id}  />)}
