@@ -66,7 +66,7 @@ router.get("/checkout-session", authController, async (req, res) => {
       dbUser.orders = [];
     }
     dbUser.orders.push(order);
-    // await dbUser.save();
+    await dbUser.save();
     // const { id, secret, password, __v, _id, ...data } = dbUser?.toObject();
 
     res.status(200).json({ message: "Order saved successfully", data: order });
