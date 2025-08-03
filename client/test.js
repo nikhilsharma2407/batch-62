@@ -1,5 +1,5 @@
 const fn = async () => {
-  return 123;
+  return 'abcd';
 };
 
 const val = fn();
